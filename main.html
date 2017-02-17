@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <script>
+      window.nodeRequire = require;
+      delete window.require;
+      delete window.exports;
+      delete window.module;
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>ここは印刷されない場所</h1>
+      <button class="waves-effect waves-light btn" id="btn-print-to-pdf">Print to PDF</button>
+    </div>
+    <div id="print-area">
+      <h1>ここが印刷される</h1>
+      <p>
+        吾輩わがはいは猫である。名前はまだ無い。
+        どこで生れたかとんと見当けんとうがつかぬ。
+        何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。
+        吾輩はここで始めて人間というものを見た。
+        しかもあとで聞くとそれは書生という人間中で一番獰悪どうあくな種族であったそうだ。
+        この書生というのは時々我々を捕つかまえて煮にて食うという話である。
+      </p>
+    </div>
+    <script>
+      var {ipcRenderer} = nodeRequire("electron");
+      var util = nodeRequire("util");
+
+      document.getElementById("btn-print-to-pdf").addEventListener("click", () => {
+        var context = document.getElementById("print-area").innerHTML;
+        ipcRenderer.send("print-to-pdf", context);
+      });
+   </script>
+  </body>
+</html>
